@@ -4,17 +4,17 @@ import java.math.BigDecimal;
 
 public abstract class Conta {
 
-    private Integer numeroDaConta;
+    private String numeroDaConta;
     private Cliente cliente;
     private BigDecimal saldo;
 
-    public Conta (Integer numeroDaConta, Cliente cliente){
+    public Conta (String numeroDaConta, Cliente cliente){
         this.numeroDaConta = numeroDaConta;
         this.cliente = cliente;
         this.saldo = BigDecimal.ZERO;
     }
 
-    public Integer getNumeroDaConta() {
+    public String getNumeroDaConta() {
         return numeroDaConta;
     }
 
@@ -24,5 +24,13 @@ public abstract class Conta {
 
     public BigDecimal getSaldo() {
         return saldo;
+    }
+
+    public void setNumeroDaConta(String numeroDaConta) {
+        this.numeroDaConta = numeroDaConta;
+    }
+
+    public void setSaldo(BigDecimal saldo) {
+        this.saldo = saldo;
     }
 }
