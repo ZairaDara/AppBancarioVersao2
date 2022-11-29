@@ -91,31 +91,35 @@ public class Main {
     }
 
     private Conta criarConta(Cliente cliente) throws EntradaContaInvalidaException {
-
+        CriarConta criarConta;
         String tipoConta = null;
 
         if (cliente instanceof ClientePF) {
             System.out.print("\nTipo Conta CC, CP, CI: ");
 
-        } if (cliente instanceof ClientePJ) {
+        } else if (cliente instanceof ClientePJ) {
             System.out.print("\nTipo Conta CC, CI: ");
+        }else {
+            throw new IllegalArgumentException("Tipo de cliente não esperado.");
         }
 
         tipoConta = entrada.next().trim();
 
         if (tipoConta.equalsIgnoreCase("CC")) {
-            return new CriarContaCorrente().criar(cliente);
+            criarConta = new CriarContaCorrente();
         } else if (tipoConta.equalsIgnoreCase("CP")) {
-            return new CriarContaPoupanca().criar(cliente);
+            criarConta = new CriarContaPoupanca();
         } else if (tipoConta.equalsIgnoreCase("CI")) {
-            return new CriarContaInvestimento().criar(cliente);
+            criarConta = new CriarContaInvestimento();
         } else {
             throw new EntradaContaInvalidaException("Tipo conta invalida");
         }
-
+        return criarConta.criar(cliente);
     }
 
     private void operacaoContaPF(Conta conta, Cliente cliente) throws ValidacaoContaBancariaException {
+
+        GerirConta gerirConta;
 
         System.out.print("\nOperaçao:" +
                 "\n Sacar (S)" +
@@ -133,13 +137,15 @@ public class Main {
             BigDecimal valor = new BigDecimal(valorEntrada);
 
             if (conta instanceof ContaCorrente){
-                new GerirContaCorrentePF().sacar(conta,valor);
+                gerirConta = (GerirConta) new GerirContaCorrentePF();
             } else if (conta instanceof  ContaPoupanca) {
-                new GerirContaPoupancaPF().sacar(conta, valor);
+                gerirConta = new GerirContaPoupancaPF();
             } else{
-                new GerirContaInvestimentoPF().sacar(conta,valor);
+                gerirConta = new GerirContaInvestimentoPF();
             }
+            gerirConta.sacar(conta, valor);
             imprimirSaldo(conta);
+
         } else if (operacao.equalsIgnoreCase("D")) {
             System.out.print("\nValor deposito: ");
             String valorEntrada = entrada.next();
@@ -172,6 +178,8 @@ public class Main {
 
     private void operacaoContaPJ(Conta conta, Cliente cliente) throws ValidacaoContaBancariaException {
 
+        GerirConta gerirConta;
+
         System.out.print("\nOperaçao:" +
                 "\n Sacar (S)" +
                 "\n Depositar (D) " +
@@ -183,17 +191,18 @@ public class Main {
         String operacao = entrada.next().trim();
 
         if (operacao.equalsIgnoreCase("S")) {
+
             System.out.print("\nValor saque: ");
             String valorEntrada = entrada.next();
             BigDecimal valor = new BigDecimal(valorEntrada);
 
-            if (conta instanceof ContaCorrente){
-                new GerirContaCorrentePJ().sacar(conta,valor);
-            } else if (conta instanceof  ContaPoupanca) {
-                new GerirContaPoupancaPJ().sacar(conta, valor);
+            if (conta instanceof ContaCorrente) gerirConta = new GerirContaCorrentePF();
+            else if (conta instanceof  ContaPoupanca) {
+                gerirConta = new GerirContaPoupancaPF();
             } else{
-                new GerirContaInvestimentoPJ().sacar(conta,valor);
+                gerirConta = new GerirContaInvestimentoPF();
             }
+            gerirConta.sacar(conta, valor);
             imprimirSaldo(conta);
         } else if (operacao.equalsIgnoreCase("D")) {
             System.out.print("\nValor deposito: ");

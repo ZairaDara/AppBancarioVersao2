@@ -12,6 +12,6 @@ public class CriarContaCorrente implements CriarConta{
         numeroConta = String.valueOf(System.currentTimeMillis());
         Conta conta = new ContaCorrente(numeroConta, cliente);
 
-        return null;
+        return conta;
     }
 }
