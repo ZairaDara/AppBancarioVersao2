@@ -36,7 +36,7 @@ public class GerirContaInvestimentoPJ implements GerirConta   {
         valorTarifado = valor.add(tarifaOperacao);
 
         GerirConta.super.transferir(conta, valorTarifado, contaFavorecido);
-        System.out.println("Valor da Taxa de Transaferência Cobrada: R$ " +valorTarifado.setScale(2, RoundingMode.HALF_EVEN));
+        System.out.println("Valor da Taxa de Transaferência Cobrada: R$ " +tarifaOperacao.setScale(2, RoundingMode.HALF_EVEN));
 
     }
 }
