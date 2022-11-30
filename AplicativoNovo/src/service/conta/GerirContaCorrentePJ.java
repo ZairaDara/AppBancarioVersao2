@@ -29,6 +29,7 @@ public class GerirContaCorrentePJ implements GerirConta {
         BigDecimal valorTotalTransferencia = valorTaxaCalculada.add(valor);
 
         GerirConta.super.transferir(conta,valorTotalTransferencia,contaFavorecido);
+        System.out.println("Valor da Taxa de Transaferência Cobrada: R$ " +valorTaxaCalculada.setScale(2, RoundingMode.HALF_EVEN));
 
     }
 }

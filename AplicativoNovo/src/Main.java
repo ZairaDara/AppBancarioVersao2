@@ -266,14 +266,25 @@ public class Main {
                 imprimirSaldo(conta);
 
             } else if (operacao.equalsIgnoreCase("T")) {
-                System.out.print("\nValor transferencia: ");
+                System.out.print("\nValor da transferencia: ");
                 String valorEntrada = entrada.next();
-                BigDecimal valor = new BigDecimal(valorEntrada);
+                BigDecimal valorTransferencia = new BigDecimal(valorEntrada);
 
-                System.out.print("\nNumero C/C destino: ");
-                String numeroContaDestino = entrada.next();
+                //Favorecido da transferencia
+                System.out.print("\nNúmero C/C do Favorecido: ");
+                String numeroContaFavorecido = entrada.next();
+                System.out.print("\nNome do Favorecido: ");
+                String nomeFavorecido = entrada.next();
+                System.out.print("\nDocumento do Favorecido: ");
+                String documentoFavorecido = entrada.next();
+                ClientePF clienteFavorecido = new ClientePF(nomeFavorecido, documentoFavorecido);
+                Conta contaFavorecido = new ContaCorrente(numeroContaFavorecido, clienteFavorecido);
 
-                // conta.transferir(new ContaCorrente(numeroContaDestino), valor);
+                if (conta instanceof ContaCorrente){
+                    new GerirContaCorrentePJ().transferir(conta, valorTransferencia, contaFavorecido);
+                } else{
+                    new GerirContaInvestimentoPJ().transferir(conta, valorTransferencia, contaFavorecido);
+                }
                 imprimirSaldo(conta);
             } else if (operacao.equalsIgnoreCase("SD")) {
                 imprimirSaldo(conta);

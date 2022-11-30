@@ -4,6 +4,7 @@ import model.entities.Conta;
 import model.exception.SaldoInvalidoException;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class GerirContaInvestimentoPJ implements GerirConta   {
     @Override
@@ -35,5 +36,7 @@ public class GerirContaInvestimentoPJ implements GerirConta   {
         valorTarifado = valor.add(tarifaOperacao);
 
         GerirConta.super.transferir(conta, valorTarifado, contaFavorecido);
+        System.out.println("Valor da Taxa de Transaferência Cobrada: R$ " +valorTarifado.setScale(2, RoundingMode.HALF_EVEN));
+
     }
 }
