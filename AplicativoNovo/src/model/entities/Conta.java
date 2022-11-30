@@ -26,9 +26,9 @@ public abstract class Conta {
         return saldo;
     }
 
-    public void setNumeroDaConta(String numeroDaConta) {
+    /*public void setNumeroDaConta(String numeroDaConta) {
         this.numeroDaConta = numeroDaConta;
-    }
+    }*/
 
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
