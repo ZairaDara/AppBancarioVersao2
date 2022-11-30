@@ -5,7 +5,7 @@ import model.exception.SaldoInvalidoException;
 
 import java.math.BigDecimal;
 
-public class GerirContaInvestimentoPF extends GerirContas implements GerirConta {
+public class GerirContaInvestimentoPF implements GerirConta {
     @Override
     public void depositar(Conta conta, BigDecimal valor) {
         BigDecimal rendimento;
@@ -13,15 +13,6 @@ public class GerirContaInvestimentoPF extends GerirContas implements GerirConta 
 
         valor = valor.add(rendimento);
 
-        super.depositar(conta,valor);
-    }
-
-    public void sacar(Conta conta, BigDecimal valor) throws SaldoInvalidoException {
-        super.sacar(conta, valor);
-    }
-
-    @Override
-    public void transferir(Conta conta, BigDecimal valorTransferencia, Conta contaFavorecido) {
-
+        GerirConta.super.depositar(conta,valor);
     }
 }

@@ -5,7 +5,7 @@ import model.exception.SaldoInvalidoException;
 
 import java.math.BigDecimal;
 
-public class GerirContaInvestimentoPJ extends GerirContas implements GerirConta   {
+public class GerirContaInvestimentoPJ implements GerirConta   {
     @Override
     public void depositar(Conta conta, BigDecimal valor) {
         BigDecimal rendimento;
@@ -13,7 +13,7 @@ public class GerirContaInvestimentoPJ extends GerirContas implements GerirConta 
 
         valor = valor.add(rendimento);
 
-        super.depositar(conta,valor);
+        GerirConta.super.depositar(conta,valor);
     }
 
     public void sacar(Conta conta, BigDecimal valor) throws SaldoInvalidoException {
@@ -23,11 +23,17 @@ public class GerirContaInvestimentoPJ extends GerirContas implements GerirConta 
         tarifaOperacao = valor.multiply(ParametrosConta.TX_TRANSACAO_PJ).divide(new BigDecimal(100));
         valorTarifado = valor.add(tarifaOperacao);
 
-        super.sacar(conta, valorTarifado);
+        GerirConta.super.sacar(conta, valorTarifado);
     }
 
     @Override
-    public void transferir(Conta conta, BigDecimal valor, Conta contaFavorecido) {
+    public void transferir(Conta conta, BigDecimal valor, Conta contaFavorecido) throws SaldoInvalidoException {
+        BigDecimal tarifaOperacao;
+        BigDecimal valorTarifado;
 
+        tarifaOperacao = valor.multiply(ParametrosConta.TX_TRANSACAO_PJ).divide(new BigDecimal(100));
+        valorTarifado = valor.add(tarifaOperacao);
+
+        GerirConta.super.transferir(conta, valorTarifado, contaFavorecido);
     }
 }
