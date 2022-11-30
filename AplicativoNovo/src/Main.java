@@ -8,6 +8,7 @@ import service.conta.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLOutput;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -206,7 +207,17 @@ public class Main {
             } else if (operacao.equalsIgnoreCase("SD")) {
                 imprimirSaldo(conta);
             } else if (operacao.equalsIgnoreCase("DC")) {
-                System.out.println(conta.toString());
+                System.out.println("Nome: " + conta.getCliente().getNome());
+                System.out.println("Documento: " + cliente.getDocumento());
+                System.out.println("Conta: " + conta.getNumeroDaConta());
+                if(conta instanceof ContaCorrente){
+                    System.out.println("Tipo de conta: Conta Corrente");
+                } else if (conta instanceof ContaPoupanca) {
+                    System.out.println("Tipo de conta: Conta Poupanca");
+                }else {
+                    System.out.println("Tipo de conta: Conta Investimento");
+                }
+                imprimirSaldo(conta);
             } else if (operacao.equalsIgnoreCase("X")) {
                 System.out.print("\n \uD83D\uDC4B \uD83D\uDC4B \uD83D\uDC4B Tchau!! " + conta.getCliente().getNome());
                 imprimirSaldo(conta);
@@ -267,7 +278,17 @@ public class Main {
             } else if (operacao.equalsIgnoreCase("SD")) {
                 imprimirSaldo(conta);
             } else if (operacao.equalsIgnoreCase("DC")) {
-                System.out.println(conta.toString());
+                System.out.println("Nome: " + conta.getCliente().getNome());
+                System.out.println("Documento: " + cliente.getDocumento());
+                System.out.println("Conta: " + conta.getNumeroDaConta());
+                if(conta instanceof ContaCorrente){
+                    System.out.println("Tipo de conta: Conta Corrente");
+                } else if (conta instanceof ContaPoupanca) {
+                    System.out.println("Tipo de conta: Conta Poupanca");
+                }else {
+                    System.out.println("Tipo de conta: Conta Investimento");
+                }
+                imprimirSaldo(conta);
             } else if (operacao.equalsIgnoreCase("X")) {
                 System.out.print("\n \uD83D\uDC4B \uD83D\uDC4B \uD83D\uDC4B Tchau!! " + conta.getCliente().getNome());
                 imprimirSaldo(conta);
