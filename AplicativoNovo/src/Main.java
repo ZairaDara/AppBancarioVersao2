@@ -143,18 +143,27 @@ public class Main {
                 BigDecimal valor = new BigDecimal(valorEntrada);
 
                 if (conta instanceof ContaCorrente){
-                    new GerirContaCorrentePF().sacar(conta,valor);
+                    gerirConta = new GerirContaCorrentePF();
                 } else if (conta instanceof  ContaPoupanca) {
-                    new GerirContaPoupancaPF().sacar(conta, valor);
+                    gerirConta = new GerirContaPoupancaPF();
                 } else{
-                    new GerirContaInvestimentoPF().sacar(conta,valor);
+                    gerirConta = new GerirContaInvestimentoPF();
                 }
+                gerirConta.sacar(conta, valor);
                 imprimirSaldo(conta);
             } else if (operacao.equalsIgnoreCase("D")) {
                 System.out.print("\nValor deposito: ");
                 String valorEntrada = entrada.next();
                 BigDecimal valor = new BigDecimal(valorEntrada);
-                // conta.depositar(valor);
+
+                if (conta instanceof ContaCorrente){
+                    gerirConta = new GerirContaCorrentePF();
+                } else if (conta instanceof  ContaPoupanca) {
+                    gerirConta = new GerirContaPoupancaPF();
+                } else{
+                    gerirConta = new GerirContaInvestimentoPF();
+                }
+                gerirConta.depositar(conta, valor);
                 imprimirSaldo(conta);
                 // TRANSFERIR
             } else if (operacao.equalsIgnoreCase("T")) {
