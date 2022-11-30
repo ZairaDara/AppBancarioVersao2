@@ -14,6 +14,6 @@ public interface GerirConta {
 
     }
 
-    void transferir (Conta conta, BigDecimal valor);
+    void transferir (Conta conta, BigDecimal valor, Conta contaFavorecido) throws SaldoInvalidoException;
 
 }

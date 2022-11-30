@@ -21,7 +21,7 @@ public class GerirContaInvestimentoPF extends GerirContas implements GerirConta 
     }
 
     @Override
-    public void transferir(Conta conta, BigDecimal valor) {
+    public void transferir(Conta conta, BigDecimal valorTransferencia, Conta contaFavorecido) {
 
     }
 }

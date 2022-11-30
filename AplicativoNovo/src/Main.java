@@ -70,24 +70,24 @@ public class Main {
 
     }
 
-    private Cliente recuperarDadosPessoaFisica() {
+    private ClientePF recuperarDadosPessoaFisica() {
         System.out.print("\nNome: ");
         String nome = entrada.next();
 
         System.out.print("\nCPF: ");
         String cpf = entrada.next();
 
-        return new CriarClientePF().criar(nome, cpf);
+        return new ClientePF(nome, cpf);
     }
 
-    private Cliente recuperarDadosPessoaJuridica() {
+    private ClientePJ recuperarDadosPessoaJuridica() {
         System.out.print("\nNome: ");
         String nome = entrada.next();
 
         System.out.print("\nCNPJ: ");
         String cnpj = entrada.next();
 
-        return new CriarClientePJ().criar(nome, cnpj);
+        return new ClientePJ(nome, cnpj);
     }
 
     private Conta criarConta(Cliente cliente) throws EntradaContaInvalidaException {
@@ -131,22 +131,54 @@ public class Main {
                     "\n Sair (X)" +
                     "\n");
             String operacao = entrada.next().trim();
+
+
             if (operacao.equalsIgnoreCase("X")) {
                 continuar = false;
-            }
-            if (operacao.equalsIgnoreCase("S")) {
+
+                // SACAR
+            } else if (operacao.equalsIgnoreCase("S")) {
                 System.out.print("\nValor saque: ");
                 String valorEntrada = entrada.next();
                 BigDecimal valor = new BigDecimal(valorEntrada);
 
                 if (conta instanceof ContaCorrente){
-                    gerirConta = (GerirConta) new GerirContaCorrentePF();
+                    new GerirContaCorrentePF().sacar(conta,valor);
                 } else if (conta instanceof  ContaPoupanca) {
-                    gerirConta = new GerirContaPoupancaPF();
+                    new GerirContaPoupancaPF().sacar(conta, valor);
                 } else{
-                    gerirConta = new GerirContaInvestimentoPF();
+                    new GerirContaInvestimentoPF().sacar(conta,valor);
                 }
-                gerirConta.sacar(conta, valor);
+                imprimirSaldo(conta);
+            } else if (operacao.equalsIgnoreCase("D")) {
+                System.out.print("\nValor deposito: ");
+                String valorEntrada = entrada.next();
+                BigDecimal valor = new BigDecimal(valorEntrada);
+                // conta.depositar(valor);
+                imprimirSaldo(conta);
+                // TRANSFERIR
+            } else if (operacao.equalsIgnoreCase("T")) {
+                System.out.print("\nValor da transferencia: ");
+                String valorEntrada = entrada.next();
+                BigDecimal valorTransferencia = new BigDecimal(valorEntrada);
+
+                //Favorecido da transferencia
+                System.out.print("\nNúmero C/C do Favorecido: ");
+                String numeroContaFavorecido = entrada.next();
+                System.out.print("\nNome do Favorecido: ");
+                String nomeFavorecido = entrada.next();
+                System.out.print("\nDocumento do Favorecido: ");
+                String documentoFavorecido = entrada.next();
+                ClientePF clienteFavorecido = new ClientePF(nomeFavorecido, documentoFavorecido);
+                Conta contaFavorecido = new ContaCorrente(numeroContaFavorecido, clienteFavorecido);
+
+                if (conta instanceof ContaCorrente){
+                    new GerirContaCorrentePF().transferir(conta, valorTransferencia, contaFavorecido);
+                } else if (conta instanceof ContaPoupanca) {
+                    new GerirContaPoupancaPF().transferir(conta, valorTransferencia, contaFavorecido);
+                } else{
+                    new GerirContaInvestimentoPF().transferir(conta, valorTransferencia, contaFavorecido);
+                }
                 imprimirSaldo(conta);
 
             } else if (operacao.equalsIgnoreCase("D")) {
@@ -161,17 +193,6 @@ public class Main {
                     gerirConta = new GerirContaInvestimentoPF();
                 }
                 gerirConta.depositar(conta, valor);
-                imprimirSaldo(conta);
-
-            } else if (operacao.equalsIgnoreCase("T")) {
-                System.out.print("\nValor transferencia: ");
-                String valorEntrada = entrada.next();
-                BigDecimal valor = new BigDecimal(valorEntrada);
-
-                System.out.print("\nNumero C/C destino: ");
-                String numeroContaDestino = entrada.next();
-
-               // conta.transferir(new ContaCorrente(numeroContaDestino), valor);
                 imprimirSaldo(conta);
             } else if (operacao.equalsIgnoreCase("SD")) {
                 imprimirSaldo(conta);
@@ -249,7 +270,7 @@ public class Main {
 
 
     private void imprimirSaldo(Conta conta) {
-        System.out.println("\n \uD83D\uDCB0 Saldo: R$ " + conta.getSaldo().setScale(4, RoundingMode.HALF_EVEN));
+        System.out.println("\n \uD83D\uDCB0 Saldo:  R$ " + conta.getSaldo().setScale(2, RoundingMode.HALF_EVEN));
     }
 
 }
