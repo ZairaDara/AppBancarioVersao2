@@ -42,6 +42,6 @@ public interface GerirConta {
         this.depositar(contaFavorecido, valor);
 
         System.out.println("Transferência realizada com sucesso!!");
-        System.out.println("Valor da Taxa de Transaferência Cobrada: R$ " +valor.setScale(2, RoundingMode.HALF_EVEN));
+
     }
 }
