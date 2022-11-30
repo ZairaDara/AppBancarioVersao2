@@ -270,7 +270,7 @@ public class Main {
 
 
     private void imprimirSaldo(Conta conta) {
-        System.out.println("\n \uD83D\uDCB0 Saldo: R$ " + conta.getSaldo().setScale(2, RoundingMode.HALF_EVEN));
+        System.out.println("\n \uD83D\uDCB0 Saldo:  R$ " + conta.getSaldo().setScale(2, RoundingMode.HALF_EVEN));
     }
 
 }
